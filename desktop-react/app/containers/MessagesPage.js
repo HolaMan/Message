@@ -2,6 +2,33 @@ import React, { Component } from 'react';
 import Message from '../components/Message';
 import { Link } from 'react-router';
 
+import List from 'material-ui/lib/lists/list';
+import Divider from 'material-ui/lib/divider';
+import Colors from 'material-ui/lib/styles/colors';
+import IconButton from 'material-ui/lib/icon-button';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import TextField from 'material-ui/lib/text-field';
+import FlatButton from 'material-ui/lib/flat-button';
+
+const iconButtonElement = (
+  <IconButton
+    touch={true}
+    tooltip="more"
+    tooltipPosition="bottom-left"
+  >
+    <MoreVertIcon />
+  </IconButton>
+);
+
+const rightIconMenu = (
+  <IconMenu iconButtonElement={iconButtonElement}>
+    <MenuItem>Reply</MenuItem>
+    <MenuItem>Forward</MenuItem>
+    <MenuItem>Delete</MenuItem>
+  </IconMenu>
+);
 
 export default class MessagesPage extends Component {
 
@@ -42,19 +69,17 @@ export default class MessagesPage extends Component {
   	var nodes = this.state.data.map(function(m) {
   		return (
   			<div>
-	  			<Message author={m.author} message={m.message}/>
-	  			<br/> 
+          <Message author={m.author} message={m.message}/>	  			
 	  		</div>
   		);
   	});
     return (
       <div>
-      	<div>          
-          <Link to="/"><h2>to Home</h2></Link>
-        </div>
-        {nodes}
-      	<input type="text" onChange={this._handleChange.bind(this)}></input>
-      	<button onClick={this._handleSend.bind(this)}>Send</button>
+      	<List subheader="Today">
+          {nodes}
+        </List>
+        <TextField onChange={this._handleChange.bind(this)} hintText="input message here..."/>
+        <FlatButton label="Send" primary={true} onClick={this._handleSend.bind(this)}/>      	
       </div>
     );
   }
